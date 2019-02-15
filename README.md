@@ -25,13 +25,16 @@ pip install nba_api
 ```
 
 ## Contributing
-### Developing
+### Development
 To get started developing, clone the repo and `cd` into it.
-Then, in an environment (conda or virtualenv) where you have not yet installed nba_api, run
+Then, in an environment (conda or virtualenv) where you have not yet installed `nba_api`, run
 ```bash
 python -m pip install -e .
 ```
 This command will install the package for development, such that any changes you make in the repo will be reflected the next time you import the package in Python.
+
+### Testing
+TODO
 
 ## Required and Optional Packages
 
