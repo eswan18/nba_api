@@ -5,7 +5,7 @@ def get_game_ids(team_abb=None):
 
     game_id_dict = {}
 
-    if team_ids is None:
+    if team_abb is None:
             team_info = get_team_info()
             team_ids = team_info['id']
 
