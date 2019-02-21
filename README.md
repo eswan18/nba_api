@@ -24,6 +24,18 @@ Please feel free to contribute and have an open discussion regarding improvement
 pip install nba_api
 ```
 
+## Contributing
+### Development
+To get started developing, clone the repo and `cd` into it.
+Then, in an environment (conda or virtualenv) where you have not yet installed `nba_api`, run
+```bash
+python -m pip install -e .
+```
+This command will install the package for development, such that any changes you make in the repo will be reflected the next time you import the package in Python.
+
+### Testing
+TODO
+
 ## Required and Optional Packages
 
 - [requests](http://www.python-requests.org/en/latest/)
@@ -52,3 +64,4 @@ A major purpose of this package is to map and analyze as many endpoints on NBA.c
     - Static
         - [players.py](https://github.com/swar/nba_api/tree/master/docs/nba_api/stats/static/players.md)
         - [teams.py](https://github.com/swar/nba_api/tree/master/docs/nba_api/stats/static/teams.md)
+
