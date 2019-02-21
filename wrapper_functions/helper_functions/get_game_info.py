@@ -6,9 +6,9 @@ from nba_api.stats.library.parameters import SeasonTypePlayoffs
 from nba_api.stats.library.parameters import SeasonID
 import pandas as pd
 
-game_id_dict = {}
+game_info_dict = {}
 
-def get_game_ids(team_id=None, season=None, season_type=None):
+def get_game_info(team_id=None, season=None, season_type=None):
         # Define teams
         if team_id is None:
             team_info = get_team_info()
@@ -40,10 +40,23 @@ def get_game_ids(team_id=None, season=None, season_type=None):
             game_info_dict0 = gamefinder.get_normalized_dict()
             game_info_dict1 = game_info_dict0['LeagueGameFinderResults']
             game_info_df = pd.DataFrame(game_info_dict1)
-            game_id_list = list(game_info_df['GAME_ID'])
-            game_id_dict[team] = game_id_list
+            game_info_dict[team] = game_info_df
             
-        # extract unique dictionary values
-        ll = list(game_id_dict.values())
-        l = [item for sublist in ll for item in sublist]
-        return(list(set(l)))
+        # collect dictionary keys into a list
+        dict_keys = game_info_dict.keys()
+        # Create list of game info dataframes 
+        frames = [game_info_dict[key] for key in dict_keys]
+        # Union the dataframes in frames
+        fin_game_info_df = pd.concat(frames, axis=0)
+
+        # Convert dtypes
+        fin_game_info_df['GAME_ID'] = fin_game_info_df['GAME_ID'].astype('str')
+        fin_game_info_df['GAME_DATE'] = fin_game_info_df['GAME_DATE'].astype('datetime64[ns]')
+        fin_game_info_df['MATCHUP'] = fin_game_info_df['MATCHUP'].astype('str')
+        fin_game_info_df['SEASON_ID'] = fin_game_info_df['SEASON_ID'].astype('str')
+        fin_game_info_df['TEAM_ABBREVIATION'] = fin_game_info_df['TEAM_ABBREVIATION'].astype('str')
+        fin_game_info_df['TEAM_NAME'] = fin_game_info_df['TEAM_NAME'].astype('str')
+        fin_game_info_df['WL'] = fin_game_info_df['WL'].astype('str')
+
+        # return the finished data frame
+        return(fin_game_info_df)
