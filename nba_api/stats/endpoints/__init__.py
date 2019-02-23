@@ -22,6 +22,7 @@ __all__ = ['boxscoreadvancedv2', 'boxscorefourfactorsv2', 'boxscoremiscv2', 'box
            'teamplayeronoffdetails', 'teamplayeronoffsummary', 'teamvsplayer', 'teamyearbyyearstats', 'videodetails',
            'videoevents', 'videostatus']
 
+# I don't love the repetitiveness of this, but it seems unavoidable.
 from .boxscoreadvancedv2 import BoxScoreAdvancedV2
 from .boxscorefourfactorsv2 import BoxScoreFourFactorsV2
 from .boxscoremiscv2 import BoxScoreMiscV2
