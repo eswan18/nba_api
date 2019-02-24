@@ -13,7 +13,11 @@ def test_request_test():
 
 def test_nba_test():
     requests.get('http://stats.nba.com/')
+
+def test_nba_test2():
     requests.get('http://stats.nba.com/stats')
+
+def test_nba_test3():
     requests.get('http://stats.nba.com/stats/draftcombinestats')
 
 
