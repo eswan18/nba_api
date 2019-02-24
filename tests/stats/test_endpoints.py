@@ -12,7 +12,9 @@ def test_request_test():
     requests.get('http://google.com')
 
 def test_nba_test():
-    requests.get('http://stats.nba.com')
+    requests.get('http://stats.nba.com/')
+    requests.get('http://stats.nba.com/stats')
+    requests.get('http://stats.nba.com/stats/draftcombinestats')
 
 
 def test_valid_json_boxscores():
