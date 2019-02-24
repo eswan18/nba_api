@@ -1,4 +1,4 @@
-import nba_api.stats.endpoints as endpoints
+#import nba_api.stats.endpoints as endpoints
 import requests
 
 # Debugging Travis CI Issues
