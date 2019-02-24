@@ -2,16 +2,16 @@
 import requests
 
 # Debugging Travis CI Issues
-def dummy_test():
+def test_dummy_test():
     assert True
 
-def dummy_test2():
+def test_dummy_test2():
     assert False
 
-def request_test():
+def test_request_test():
     requests.get('http://google.com')
 
-def nba_test():
+def test_nba_test():
     requests.get('http://stats.nba.com')
 
 
