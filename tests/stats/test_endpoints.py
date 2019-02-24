@@ -1,4 +1,19 @@
 import nba_api.stats.endpoints as endpoints
+import requests
+
+# Debugging Travis CI Issues
+def dummy_test():
+    assert True
+
+def dummy_test2():
+    assert False
+
+def request_test():
+    requests.get('http://google.com')
+
+def nba_test():
+    requests.get('http://stats.nba.com')
+
 
 def test_valid_json_boxscores():
     assert endpoints.BoxScoreAdvancedV2(game_id='0021700807').nba_response.valid_json()
