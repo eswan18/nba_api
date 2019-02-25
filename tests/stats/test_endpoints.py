@@ -17,10 +17,6 @@ def test_nba_test():
 def test_nba_test2():
     requests.get('http://stats.nba.com/stats')
 
-def test_nba_test3():
-    requests.get('http://stats.nba.com/stats/draftcombinestats')
-
-
 def test_valid_json_boxscores():
     assert endpoints.BoxScoreAdvancedV2(game_id='0021700807').nba_response.valid_json()
     assert endpoints.BoxScoreFourFactorsV2(game_id='0021700807').nba_response.valid_json()
