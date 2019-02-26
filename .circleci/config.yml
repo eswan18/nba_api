@@ -8,5 +8,5 @@ jobs:
         steps:
             - checkout
             - run: sudo pip install -r requirements.txt
-            - run: sudo pip install -e .
+            - run: sudo pip install -e . && sudo pip install pytest
             - run: pytest
