@@ -10,14 +10,16 @@ import pandas as pd
 import numpy as np
 
 class API():
-    def __init__(self, year=None, team=None):
+    def __init__(self, year=None, team=None, season_segment=None):
         self.year = year
         self.team = team
+        self.season_segment = season_segment
 
-    def get_playbyplay(self, team=None, year=None, season_segment=None):      
-        #team_id = self._resolve_team_ref(team)
-        #season_id = self._fmt_year_as_season_id(year)
-        game_id_list = self._resolve_game_ids(team_str=team, year=year, season_segment=None)
+    def get_playbyplay(self, team, year, season_segment):      
+        game_id_list = self._resolve_game_ids(team=team, year=year, season_segment=season_segment)
+        
+        # collect game info for each team
+        game_info_df = self.get_game_info(team=team, year=year, season_segment=season_segment)
 
         # Start an empty dict
         pbp_data_dict = {}
@@ -62,20 +64,21 @@ class API():
 
         # Return
         return(pbp_df)
-
-    def get_game_info(self, team_str=None, year=None, season_segment=None):
+    
+    def get_box_scores(self, team, year, season_segment):
         return NotImplemented
 
+    def get_game_info(self, team, year, season_segment):
         game_info_dict = {}
 
-        team_ids = self._resolve_team_ref(team)
+        team_ids = self._resolve_team_ref_to_df(team)['id']
         season_id = self._fmt_year_as_season_id(year)
         season_segment = self._resolve_season_seg(season_segment)
 
         for team in team_ids:
             gamefinder = leaguegamefinder.LeagueGameFinder(team_id_nullable=team,
-                                                        season_nullable=season_code,
-                                                        season_type_nullable=season_seg)
+                                                        season_nullable=season_id,
+                                                        season_type_nullable=season_segment)
             game_info_dict0 = gamefinder.get_normalized_dict()
             game_info_dict1 = game_info_dict0['LeagueGameFinderResults']
             game_info_df = pd.DataFrame(game_info_dict1)
@@ -100,20 +103,36 @@ class API():
         # return the finished data frame
         return(fin_game_info_df)
 
-    def get_box_scores(self):
-        return NotImplemented
-
-    def _resolve_team_ref(self, team_str=None):
-        if team_str is None:
-                return(pd.DataFrame(teams.get_teams())) 
+    def _resolve_team_ref_to_df(self, team):
+        nba_teams_df = pd.DataFrame(teams.get_teams())
+        
+        team_abb_list = teams._team_abb_list()
+        team_fn_list = teams._team_full_name_list()
+        team_id_list = teams._team_id_list()
+        team_nn_list = teams._team_nickname_list()
+        
+        if team is None:
+            return(nba_teams_df)
+        elif team[0] in team_abb_list:
+            return(nba_teams_df[nba_teams_df['abbreviation'].isin(team)])
+        elif team[0] in team_fn_list:
+            return(nba_teams_df[nba_teams_df['full_name'].isin(team)])
+        elif team[0] in team_id_list:
+            return(nba_teams_df[nba_teams_df['id'].isin(team)])
+        elif team[0] in team_nn_list:
+            return(nba_teams_df[nba_teams_df['nickname'].isin(team)])
         else:
-                nba_teams_df = pd.DataFrame(teams.get_teams())
-                return(nba_teams_df[nba_teams_df['abbreviation'].isin(team_abb)]['team_id'])
+            return(nba_teams_df)
+        
+    def _resolve_team_id(self, team):
+        team_info_df = self._resolve_team_ref_to_df(team)
+
+        return(team_info_df['id'])
 
     def _fmt_year_as_season_id(self, year):
         return '{}-{}'.format(str(year), str(year + 1)[2:])
     
-    def _resolve_season_seg(self, season_segment=None):
+    def _resolve_season_seg(self, season_segment):
         if season_segment is None:
             return(SeasonType.regular)
         elif season_segment == 'Pre-Season':
@@ -123,17 +142,17 @@ class API():
         elif season_segment == 'Playoffs':
             return(SeasonTypePlayoffs.playoffs)
 
-    def _resolve_game_ids(self, team_str=None, year=None, season_segment=None):
-        team_ids = self._resolve_team_ref(team_str=team_str)
+    def _resolve_game_ids(self, team, year, season_segment):
+        team_ids = self._resolve_team_id(team=team)
         season = self._fmt_year_as_season_id(year=year)
-        season_type = self._resolve_season_seg(season_segment=season_segment)
+        season_segment = self._resolve_season_seg(season_segment=season_segment)
         
         game_id_dict = {}
         
         for team in team_ids:
             gamefinder = leaguegamefinder.LeagueGameFinder(team_id_nullable=team,
                                                         season_nullable=season,
-                                                        season_type_nullable=season_type)
+                                                        season_type_nullable=season_segment)
             game_info_dict0 = gamefinder.get_normalized_dict()
             game_info_dict1 = game_info_dict0['LeagueGameFinderResults']
             game_info_df = pd.DataFrame(game_info_dict1)
@@ -144,6 +163,8 @@ class API():
         ll = list(game_id_dict.values())
         l = [item for sublist in ll for item in sublist]
         return(list(set(l)))
+    
+    
          
     def _get_event_msg_type_desc(self, event_msg_type):
         return NotImplemented
