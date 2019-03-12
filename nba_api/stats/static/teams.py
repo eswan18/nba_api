@@ -75,3 +75,36 @@ def get_teams():
     for team in teams:
         teams_list.append(_get_team_dict(team))
     return teams_list
+
+def _team_abb_list():
+    return ['ATL','BOS','CLE','NOP','CHI','DAL','DEN',
+            'GSW','HOU','LAC','LAL','MIA','MIL','MIN',
+            'BKN','NYK','ORL','IND','PHI','PHX','POR',
+            'SAC','SAS','OKC','TOR','UTA','MEM','WAS','DET','CHA']
+
+def _team_full_name_list():
+    return ['Atlanta Hawks','Boston Celtics','Cleveland Cavaliers','New Orleans Pelicans',
+            'Chicago Bulls','Dallas Mavericks','Denver Nuggets','Golden State Warriors','Houston Rockets',
+            'Los Angeles Clippers','Los Angeles Lakers','Miami Heat','Milwaukee Bucks','Minnesota Timberwolves',
+            'Brooklyn Nets','New York Knicks','Orlando Magic','Indiana Pacers','Philadelphia 76ers','Phoenix Suns',
+            'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs','Oklahoma City Thunder',
+            'Toronto Raptors','Utah Jazz','Memphis Grizzlies','Washington Wizards','Detroit Pistons','Charlotte Hornets']
+
+def _team_city_list():
+    return ['Atlanta','Boston','Cleveland','New Orleans','Chicago',
+            'Dallas','Denver','Golden State','Houston','Los Angeles',
+            'Miami','Milwaukee','Minnesota','Brooklyn','New York','Orlando',
+            'Indiana','Philadelphia','Phoenix','Portland','Sacramento','San Antonio',
+            'Oklahoma City','Toronto','Utah','Memphis','Washington','Detroit','Charlotte']
+
+def _team_id_list():
+    return ['1610612737','1610612738','1610612739','1610612740','1610612741','1610612742','1610612743', '1610612744',
+            '1610612745','1610612746','1610612747','1610612748','1610612749','1610612750','1610612751','1610612752',
+            '1610612753','1610612754','1610612755','1610612756', '1610612757','1610612758','1610612759',
+            '1610612760','1610612761','1610612762','1610612763','1610612764','1610612765','1610612766']
+
+def _team_nickname_list():
+    return ['Hawks','Celtics','Cavaliers','Pelicans','Bulls',
+            'Mavericks','Nuggets','Warriors','Rockets','Clippers', 'Lakers','Heat','Bucks','Timberwolves','Nets','Knicks', 'Magic','Pacers','76ers','Suns','Trail Blazers','Kings',
+            'Spurs','Thunder','Raptors','Jazz','Grizzlies','Wizards',
+            'Pistons','Hornets']
