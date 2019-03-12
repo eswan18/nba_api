@@ -15,7 +15,7 @@ class API():
         self.team = team
         self.season_segment = season_segment
 
-    def get_playbyplay(self, team, year, season_segment):      
+    def get_playbyplay(self, team, year, season_segment):
         game_id_list = self._resolve_game_ids(team=team, year=year, season_segment=season_segment)
         
         # collect game info for each team
